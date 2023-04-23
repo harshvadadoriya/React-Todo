@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import pendingTodoImg from './assets/task-pending.png';
@@ -12,16 +12,21 @@ function App() {
 		setShowInput(true);
 	};
 
-	const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-		if (event.key === 'Escape') {
-			setShowInput(false);
-		}
-	};
-
 	useEffect(() => {
 		if (showInput) {
 			inputRef.current?.focus();
 		}
+		const handleEscape = (event: KeyboardEvent) => {
+			if (event.key === 'Escape') {
+				setShowInput(false);
+			}
+		};
+
+		document.addEventListener('keydown', handleEscape);
+
+		return () => {
+			document.removeEventListener('keydown', handleEscape);
+		};
 	}, [showInput]);
 
 	return (
@@ -124,12 +129,7 @@ function App() {
 						</div>
 						{showInput ? (
 							<div className="inputText">
-								<input
-									type="text"
-									placeholder="Add Your Todo"
-									onKeyDown={handleKeyPress}
-									ref={inputRef}
-								/>
+								<input type="text" placeholder="Add Your Todo" ref={inputRef} />
 							</div>
 						) : (
 							<button className="plus" onClick={handlePlusClick}>

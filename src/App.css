@@ -2,6 +2,11 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+	scrollbar-width: none;
+}
+
+::-webkit-scrollbar {
+	width: 0;
 }
 
 body {
@@ -62,15 +67,16 @@ body {
 }
 
 .plus {
-	height: 80px;
-	width: 80px;
+	height: 85px;
+	width: 85px;
 	border: 1px solid rgb(255, 255, 255);
 	background-color: rgb(101, 209, 101);
 	border-radius: 50%;
 	position: absolute;
 	bottom: 3vh;
 	left: 50%;
-	top: 91%;
+	/* top: 92%; */
+	bottom: -8%;
 	transform: translateX(-50%);
 }
 
@@ -87,8 +93,9 @@ body {
 
 .todo-container {
 	width: auto;
-	height: 390px;
+	height: 380px;
 	overflow: auto;
+	margin-top: 10px;
 }
 
 .todo-list {
@@ -139,8 +146,9 @@ input[type='text'] {
 		font-size: 28px;
 	}
 	.plus {
-		height: 70px;
-		width: 70px;
-		top: 93%;
+		height: 80px;
+		width: 80px;
+		bottom: -7%;
+		/* top: 93%; */
 	}
 }

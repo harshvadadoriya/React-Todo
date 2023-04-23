@@ -1,5 +1,5 @@
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 type Todo = {
 	id: string;
@@ -7,9 +7,11 @@ type Todo = {
 };
 
 const TodoApp = () => {
+	// state variables to hold todos and completed todos
 	const [todos, setTodos] = useState<Todo[]>([]);
 	const [completedTodos, setCompletedTodos] = useState<Todo[]>([]);
 
+	// useEffect hook to load saved todos from localStorage on mount
 	useEffect(() => {
 		const storedTodos = JSON.parse(localStorage.getItem('todos') || '[]');
 		const storedCompletedTodos = JSON.parse(
@@ -20,6 +22,8 @@ const TodoApp = () => {
 
 		const currentDate = new Date().toLocaleDateString();
 		const storedDate = localStorage.getItem('date');
+
+		// clear todos if date has changed
 		if (currentDate !== storedDate) {
 			localStorage.removeItem('todos');
 			localStorage.removeItem('completedTodos');
@@ -29,13 +33,16 @@ const TodoApp = () => {
 		localStorage.setItem('date', currentDate);
 	}, []);
 
+	// handle function to add a new todo item
 	const handleAddTodo = (todo: Todo) => {
 		const updatedTodos = [...todos, todo];
 		setTodos(updatedTodos);
 		localStorage.setItem('todos', JSON.stringify(updatedTodos));
 	};
 
+	// handle function to remove a todo item
 	const handleRemoveTodo = (id: string) => {
+		// filter out the todo item from both lists
 		const updatedTodos = todos.filter((t) => t.id !== id);
 		const updatedCompletedTodos = completedTodos.filter((t) => t.id !== id);
 		setTodos(updatedTodos);
@@ -47,18 +54,23 @@ const TodoApp = () => {
 		);
 	};
 
+	// handle function to toggle a todo item between the two lists
 	const handleToggleTodo = (todo: Todo) => {
 		const updatedTodos = [...todos];
 		const updatedCompletedTodos = [...completedTodos];
+
+		// find the index of the todo item in each list
 		const todoIndex = updatedTodos.findIndex((t) => t.id === todo.id);
 		const completedTodoIndex = updatedCompletedTodos.findIndex(
 			(t) => t.id === todo.id
 		);
 
 		if (todoIndex !== -1 && completedTodoIndex === -1) {
+			// remove the todo item from the todos list and add it to the completed todos list
 			updatedTodos.splice(todoIndex, 1);
 			updatedCompletedTodos.push(todo);
 		} else if (todoIndex === -1 && completedTodoIndex !== -1) {
+			// remove the todo item from the completed todos list and add it to the todos list
 			updatedCompletedTodos.splice(completedTodoIndex, 1);
 			updatedTodos.push(todo);
 		}
@@ -72,6 +84,7 @@ const TodoApp = () => {
 		);
 	};
 
+	// render the UI
 	return (
 		<div>
 			<h1 className="container">Todo List</h1>
@@ -104,6 +117,7 @@ const TodoApp = () => {
 			</form>
 			{todos.length > 0 || completedTodos.length > 0 ? (
 				<ul>
+					{/* render each todo item */}
 					{todos.map((todo) => (
 						<li key={todo.id}>
 							<input
@@ -115,6 +129,7 @@ const TodoApp = () => {
 							<button onClick={() => handleRemoveTodo(todo.id)}>Remove</button>
 						</li>
 					))}
+					{/* render each completed todo item */}
 					{completedTodos.map((todo) => (
 						<li key={todo.id}>
 							<input
