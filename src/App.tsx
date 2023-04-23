@@ -8,6 +8,39 @@ function App() {
 	const [showInput, setShowInput] = useState(false);
 	const inputRef = useRef<HTMLInputElement>(null);
 
+	const storeDate = new Date().getDate();
+	const storeYear = new Date().getFullYear();
+	const month = [
+		'Jan',
+		'Feb',
+		'Mar',
+		'Apr',
+		'May',
+		'Jun',
+		'Jul',
+		'Aug',
+		'Sep',
+		'Oct',
+		'Nov',
+		'Dec',
+	];
+	const myMonth = new Date();
+	const storeMonth = month[myMonth.getMonth()];
+
+	const day = [
+		'Sunday',
+		'Monday',
+		'Tuesday',
+		'Wednesday',
+		'Thursday',
+		'Friday',
+		'Saturday',
+	];
+	const myDay = new Date();
+	const storeDay = day[myDay.getDay()];
+
+	console.log(storeDay, storeDate, storeMonth, storeYear);
+
 	const handlePlusClick = () => {
 		setShowInput(true);
 	};
@@ -32,17 +65,18 @@ function App() {
 	return (
 		<>
 			<section className="main">
-				<div className="mx-2 card">
+				<div className="mx-4 card">
 					<div className="container">
 						<div className="row date-container">
 							<div className="col date-month-year">
-								<span className="date">12</span>
+								<span className="date">{storeDate}</span>
 								<span className="month-year">
-									Jan<p>2022</p>
+									{storeMonth}
+									<p>{storeYear}</p>
 								</span>
 							</div>
 							<div className="col">
-								<span className="day">Tuesday</span>
+								<span className="day">{storeDay}</span>
 							</div>
 						</div>
 						<div className="todo-container ">
