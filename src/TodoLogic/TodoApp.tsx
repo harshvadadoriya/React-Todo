@@ -87,7 +87,7 @@ const TodoApp = () => {
 	// render the UI
 	return (
 		<div>
-			<h1 className="container">Todo List</h1>
+			<h1 className="container mt-3">Todo List</h1>
 			<form className="container" onSubmit={(e) => e.preventDefault()}>
 				<input
 					type="text"
@@ -145,7 +145,7 @@ const TodoApp = () => {
 					))}
 				</ul>
 			) : (
-				<p>No Todos</p>
+				<p className="container mt-2">No Todos</p>
 			)}
 		</div>
 	);

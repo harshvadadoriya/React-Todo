@@ -33,11 +33,7 @@ body {
 }
 
 .date-container {
-	/* display: flex;
-	justify-content: center;
-	align-items: center; */
 	align-items: center;
-	/* margin: auto; */
 	margin-top: 25px;
 }
 
@@ -46,49 +42,64 @@ body {
 	justify-content: center;
 	align-items: center;
 	margin-left: -10px;
-	/* border: 1px solid black; */
 }
 
 .date {
-	font-size: 50px;
+	font-size: 45px;
+	color: #585858;
+	font-weight: 500;
 }
 
 .month-year {
-	font-size: 18px;
-	line-height: 20px;
+	font-size: 15px;
+	line-height: 18px;
 	margin: 18px 0 0 8px;
+}
+
+.month {
+	color: #505050;
+	font-weight: 500;
+}
+
+.year {
+	color: #787878;
+	font-weight: 400;
 }
 
 .day {
 	display: flex;
 	justify-content: center;
-	/* border: 1px solid black; */
-	font-size: 30px;
+	font-size: 17px;
+	color: #787878;
+	font-weight: 500;
+	position: relative;
+	left: 20px;
 }
 
 .plus {
 	height: 85px;
 	width: 85px;
-	border: 1px solid rgb(255, 255, 255);
 	background-color: rgb(101, 209, 101);
+	border: none;
 	border-radius: 50%;
 	position: absolute;
 	bottom: 3vh;
 	left: 50%;
-	/* top: 92%; */
 	bottom: -8%;
 	transform: translateX(-50%);
+	background-color: #5ad3a0;
 }
 
 .add {
-	position: relative;
 	display: flex;
 	justify-content: center;
+	align-items: center;
 	height: 100%;
 	width: 100%;
 	align-items: center;
-	font-size: 60px;
-	color: rgb(93, 134, 93);
+	font-size: 55px;
+	font-weight: 400;
+	color: rgb(100, 155, 100);
 }
 
 .todo-container {
@@ -106,7 +117,16 @@ body {
 	width: 80%;
 	margin: auto;
 	margin-top: 5px;
-	font-size: 20px;
+	font-size: 17px;
+	font-weight: 300;
+}
+
+.todo-list > span {
+	font-weight: 400;
+}
+
+.completed {
+	color: #94949c;
 }
 
 .todo-status {
@@ -129,26 +149,4 @@ input[type='text'] {
 	border: none;
 	outline: none;
 	background: transparent;
-}
-
-@media screen and (max-width: 768px) {
-	.date {
-		font-size: 50px;
-	}
-
-	.month-year {
-		font-size: 18px;
-		line-height: 20px;
-		margin: 20px 0 0 8px;
-	}
-
-	.day {
-		font-size: 28px;
-	}
-	.plus {
-		height: 80px;
-		width: 80px;
-		bottom: -7%;
-		/* top: 93%; */
-	}
 }
