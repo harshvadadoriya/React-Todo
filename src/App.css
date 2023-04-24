@@ -150,3 +150,13 @@ input[type='text'] {
 	outline: none;
 	background: transparent;
 }
+
+.task-completed {
+	display: flex;
+	justify-content: center;
+}
+
+.task-completed img {
+	height: 250px;
+	width: 250px;
+}
