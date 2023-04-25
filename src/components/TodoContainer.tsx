@@ -18,9 +18,10 @@ const TodoContainer: React.FC = (): JSX.Element => {
 		useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
-		const storedTodos = JSON.parse(localStorage.getItem('todos') || '[]');
+		// nullish coalescing operator ?? to provide a default value of an empty array [] only when the parsed JSON value is null or undefined (not when it's falsy).
+		const storedTodos = JSON.parse(localStorage.getItem('todos') ?? '[]');
 		const storedCompletedTodos = JSON.parse(
-			localStorage.getItem('completedTodos') || '[]'
+			localStorage.getItem('completedTodos') ?? '[]'
 		);
 		setTodos(storedTodos);
 		setCompletedTodos(storedCompletedTodos);
@@ -61,10 +62,16 @@ const TodoContainer: React.FC = (): JSX.Element => {
 		}
 	}
 
+	// const handleAddTodo = (todo: Todo) => {
+	// 	const updatedTodos = [...todos, todo];
+	// 	setTodos(updatedTodos);
+	// 	localStorage.setItem('todos', JSON.stringify(updatedTodos));
+	// };
+
+	// Use functional updates in setState calls: In the handleAddTodo function, instead of using the spread operator to update the todos state, use functional updates. This ensures that the state is always updated based on the previous value of the state.
 	const handleAddTodo = (todo: Todo) => {
-		const updatedTodos = [...todos, todo];
-		setTodos(updatedTodos);
-		localStorage.setItem('todos', JSON.stringify(updatedTodos));
+		setTodos((prevTodos) => [...prevTodos, todo]);
+		localStorage.setItem('todos', JSON.stringify([...todos, todo]));
 	};
 
 	const handleRemoveTodo = (id: string) => {
