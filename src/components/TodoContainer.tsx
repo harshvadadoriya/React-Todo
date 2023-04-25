@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import DateComponent from './DateComponent';
 import TodoComponent from './TodoListComponent';
-import TaskCompletedImg from '../assets/transparent/completing-tasks-unscreen.gif';
+import toast, { Toaster } from 'react-hot-toast';
+import TaskCompletedImg from '../assets/transparent/task-not-found-unscreen.gif';
 
 type Todo = {
 	id: string;
@@ -36,6 +37,30 @@ const TodoContainer: React.FC = (): JSX.Element => {
 		localStorage.setItem('date', currentDate);
 	}, []);
 
+	function handleInputKeyDown(
+		event: React.KeyboardEvent<HTMLInputElement>,
+		handleAddTodo: (todo: Todo) => void,
+		setShowInput: React.Dispatch<React.SetStateAction<boolean>>
+	) {
+		if (event.key === 'Enter') {
+			const todoInput = event.target as HTMLInputElement;
+			if (todoInput.value.trim() !== '') {
+				const todo: Todo = {
+					id: Date.now().toString(),
+					text: todoInput.value.trim(),
+					status: 'pending',
+				};
+				handleAddTodo(todo);
+				todoInput.value = '';
+				toast.success('Todo has been added!', { duration: 1500 });
+				// if we don't use setShowInput below than don't need to pass setShowInput in handleInputKeyDown() function
+				// setShowInput(false);
+			} else if (!todoInput.value.trim()) {
+				toast.error("Todo can't be empty!", { duration: 1500 });
+			}
+		}
+	}
+
 	const handleAddTodo = (todo: Todo) => {
 		const updatedTodos = [...todos, todo];
 		setTodos(updatedTodos);
@@ -63,19 +88,20 @@ const TodoContainer: React.FC = (): JSX.Element => {
 			(t) => t.id === todo.id
 		);
 
+		// todoIndex is not equal to -1, means todo item exists in the todos array, completedTodoIndex is equal to -1, means todo item doesn't exist in completedTodos array and this condition will evaluate to true
 		if (todoIndex !== -1 && completedTodoIndex === -1) {
-			// update the status of the clicked todo to "completed"
+			// update the status of the clicked todo to "completed" only if above both if() condition return true
 			updatedTodos[todoIndex].status = 'completed';
 			updatedCompletedTodos.push(updatedTodos[todoIndex]);
 			updatedTodos.splice(todoIndex, 1);
+			toast.success('Woohoo! Todo complete!', { duration: 1500, icon: '🎉' });
 		}
-
-		// else if (todoIndex === -1 && completedTodoIndex !== -1) {
-		// 	// update the status of the clicked todo back to "pending"
-		// 	updatedCompletedTodos[completedTodoIndex].status = 'pending';
-		// 	updatedTodos.push(updatedCompletedTodos[completedTodoIndex]);
-		// 	updatedCompletedTodos.splice(completedTodoIndex, 1);
-		// }
+		// todoIndex is equal to -1, means todo item doesn't exists in the array, completedTodoIndex not equal to -1 means that todo item exist in completedTodos array
+		else if (todoIndex === -1 && completedTodoIndex !== -1) {
+			// remove the clicked todo from the list
+			updatedCompletedTodos.splice(completedTodoIndex, 1);
+			toast.success('Todo has been removed', { duration: 1500, icon: '🚀' });
+		}
 
 		setTodos(updatedTodos);
 		setCompletedTodos(updatedCompletedTodos);
@@ -114,7 +140,8 @@ const TodoContainer: React.FC = (): JSX.Element => {
 					<div className="container">
 						<DateComponent />
 						{todos.length === 0 && completedTodos.length === 0 ? (
-							<div className="todo-container task-completed">
+							<div className="task-completed">
+								<p className="todos-completed">All Todos Completed!</p>
 								<img
 									className="img-fluid"
 									src={TaskCompletedImg}
@@ -151,19 +178,7 @@ const TodoContainer: React.FC = (): JSX.Element => {
 									placeholder="Add Your Todo!"
 									ref={inputRef}
 									onKeyDown={(event) => {
-										if (event.key === 'Enter') {
-											const todoInput = event.target as HTMLInputElement;
-											if (todoInput.value.trim() !== '') {
-												const todo: Todo = {
-													id: Date.now().toString(),
-													text: todoInput.value.trim(),
-													status: 'pending',
-												};
-												handleAddTodo(todo);
-												todoInput.value = '';
-												setShowInput(false);
-											}
-										}
+										handleInputKeyDown(event, handleAddTodo, setShowInput);
 									}}
 								/>
 							</div>
@@ -178,6 +193,7 @@ const TodoContainer: React.FC = (): JSX.Element => {
 						)}
 					</div>
 				</div>
+				<Toaster />
 			</section>
 		</>
 	);
