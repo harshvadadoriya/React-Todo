@@ -27,7 +27,7 @@ body {
 	align-items: center;
 	height: 550px;
 	width: 400px;
-	background-color: #fff;
+	background-color: white;
 	border: none;
 	box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -73,13 +73,12 @@ body {
 	color: #787878;
 	font-weight: 500;
 	position: relative;
-	left: 20px;
+	left: 6px;
 }
 
 .plus {
 	height: 85px;
 	width: 85px;
-	background-color: rgb(101, 209, 101);
 	border: none;
 	border-radius: 50%;
 	position: absolute;
@@ -101,10 +100,6 @@ body {
 	font-weight: 400;
 	color: rgb(100, 155, 100);
 }
-
-/* .add > p {
-	margin-top: 10px;
-} */
 
 .todo-container {
 	width: auto;
@@ -160,20 +155,19 @@ input[type='text'] {
 }
 
 .task-completed {
-	/* display: grid;
-	justify-content: center;
-	align-items: center; */
 	display: grid;
 	justify-content: center;
 }
 
 .task-completed p {
-	font-size: 20px;
+	font-size: 21px;
 	font-weight: 500;
+	color: #707070;
 	text-align: center;
-	margin-top: 30px;
+	margin-top: 20px;
 }
 
 .task-completed img {
-	margin-top: -50px;
+	margin-top: -18px;
+	width: 300px;
 }

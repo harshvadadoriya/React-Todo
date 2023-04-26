@@ -1,4 +1,3 @@
-// Todo List component which will display list of todos
 import React from 'react';
 import pendingTodoImg from '../assets/task-pending.png';
 import successTodoImg from '../assets/task-completed.png';
@@ -6,14 +5,14 @@ import successTodoImg from '../assets/task-completed.png';
 type TodoProps = {
 	text: string;
 	status: 'completed' | 'pending';
-	onStatusChange: () => void;
+	onToggle: () => void;
+	onRemove: () => void;
 };
 
 // React.Component used to define Class Component and it takes in the TodoProps interface as its generic type parameter.
-class TodoListComponent extends React.Component<TodoProps> {
-	handleStatusClick = (): void => {
-		// class method that handles the click event of the todo-status image, by invoking the onStatusChange function passed as a prop.
-		this.props.onStatusChange();
+class TodoComponent extends React.Component<TodoProps> {
+	handleToggle = (): void => {
+		this.props.onToggle();
 	};
 	render(): React.ReactNode {
 		const { text, status } = this.props;
@@ -27,7 +26,7 @@ class TodoListComponent extends React.Component<TodoProps> {
 						className="todo-status"
 						src={status === 'completed' ? successTodoImg : pendingTodoImg}
 						alt={status === 'completed' ? 'completed' : 'pending'}
-						onClick={this.handleStatusClick}
+						onClick={this.handleToggle}
 					/>
 				</div>
 			</div>
@@ -35,4 +34,4 @@ class TodoListComponent extends React.Component<TodoProps> {
 	}
 }
 
-export default TodoListComponent;
+export default TodoComponent;
