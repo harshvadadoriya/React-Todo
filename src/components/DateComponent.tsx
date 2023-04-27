@@ -32,8 +32,7 @@ const day: string[] = [
 const myDay: Date = new Date();
 const storeDay: string = day[myDay.getDay()];
 
-// component will only be re-rendered if its props change. Since this component has no props, it will not be re-rendered
-const DateComponent: React.FC = React.memo((): JSX.Element => {
+const DateComponent: React.FC = (): JSX.Element => {
 	return (
 		<>
 			<div className="row date-container">
@@ -50,6 +49,6 @@ const DateComponent: React.FC = React.memo((): JSX.Element => {
 			</div>
 		</>
 	);
-});
+};
 
 export default DateComponent;
